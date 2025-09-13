@@ -38,11 +38,11 @@ Goal: Create six subnets across two Availability Zones (us-east-1a and us-east-1
 
 The Plan: Carve the large VPC CIDR into smaller, non-overlapping blocks using a /20 mask (each providing 4,096 IPs).  
 
-// Mistake: While creating the third subnet, I accidentally tried to use a /19 CIDR block (10.0.32.0/19). This block was too large and overlapped with the range of my first subnet (10.0.0.0/20), causing an error.  
+/ Mistake: While creating the third subnet, I accidentally tried to use a /19 CIDR block (10.0.32.0/19). This block was too large and overlapped with the range of my first subnet (10.0.0.0/20), causing an error.  
 
 <img src="vpc/CIDR%2019%20error.png" alt="CIDR overlap error" width="800"/>  
 
-// The Fix & Lesson: I corrected the CIDR to 10.0.32.0/20. This was a great hands-on lesson in how CIDR blocks work and why careful planning is essential to avoid IP address overlap.  
+/ The Fix & Lesson: I corrected the CIDR to 10.0.32.0/20. This was a great hands-on lesson in how CIDR blocks work and why careful planning is essential to avoid IP address overlap.  
 
 Final Subnet Setup:  
 
@@ -84,8 +84,8 @@ Public Route Table:
 
 Action: Created a route table named Public-Route-Table. Added a route sending all non-VPC traffic (0.0.0.0/0) to the Internet Gateway (IGW). Then, I explicitly associated the two Public Web Subnets with this route table.  
 
-<img src="edit-routes-IGW.png" alt="Route to IGW" width="500"/>  
-<img src="edit-subnet-association-web-subnets.png" alt="Subnet association for web tier" width="500"/>  
+<img src="vpc/edit-routes-IGW.png" alt="Route to IGW" width="600"/>  
+<img src="vpc/edit-subnet-association-web-subnets.png" alt="Subnet association for web tier" width="600"/>  
 
 Why explicit association? A route table is just a set of directions. You have to manually link it to the subnets that should use those directions. Without this association, the web subnets would never use the IGW.  
 
@@ -95,8 +95,8 @@ Action: Created two private route tables: Private-route-AZ1 and Private-route-AZ
 
 For each, I added a route sending all non-VPC traffic (0.0.0.0/0) to the NAT Gateway in its respective Availability Zone.  
 
-<img src="edit-routes-NAT-gateway.png" alt="Route to NAT Gateway" width="500"/>  
-<img src="edit-subnet-association-private-app-subnet.png" alt="Subnet association for private app tier" width="500"/>  
+<img src="vpc/edit-routes-NAT-gateway.png" alt="Route to NAT Gateway" width="600"/>  
+<img src="vpc/edit-subnet-association-private-app-subnet.png" alt="Subnet association for private app tier" width="600"/>  
 
 I associated Private-route-AZ1 with the private subnets in AZ1 (App and DB), and Private-route-AZ2 with the private subnets in AZ2.  
 
@@ -112,7 +112,7 @@ Important: Always pick the 3-tier VPC, not Default VPC.
 
 External Load Balancer SG  
 
-<img src="Load-balancer-SG.png" alt="Load Balancer Security Group" width="500"/>  
+<img src="vpc/Load-balancer-SG.png" alt="Load Balancer Security Group" width="600"/>  
 
 The “front door.”  
 
@@ -122,7 +122,7 @@ Rule: Allow HTTP (80) from my IP (so I can test).
 
 Web Tier SG (Public Instances)  
 
-<img src="web-tier-SG.png" alt="Web Tier Security Group" width="500"/>  
+<img src="vpc/web-tier-SG.png" alt="Web Tier Security Group" width="600"/>  
 
 These are the actual web servers.  
 
@@ -135,7 +135,7 @@ Rules:
 
 Internal Load Balancer SG  
 
-<img src="internal-LB-SG.png" alt="Internal Load Balancer SG" width="500"/>  
+<img src="vpc/internal-LB-SG.png" alt="Internal Load Balancer SG" width="600"/>  
 
 Balances traffic between web and app tier.  
 
@@ -143,7 +143,7 @@ Only accepts traffic from Web Tier SG.
 
 Private Instance SG (App Tier)  
 
-<img src="private-SG.png" alt="Private Instance SG" width="500"/>  
+<img src="vpc/private-SG.png" alt="Private Instance SG" width="600"/>  
 
 These are the app servers, running on port 4000.  
 
@@ -158,7 +158,7 @@ When setting up, I couldn’t find my Internal LB SG in the dropdown. Turns out 
 
 DB SG (Database Tier)  
 
-<img src="DB-SG.png" alt="DB Security Group" width="500"/>  
+<img src="vpc/DB-SG.png" alt="DB Security Group" width="600"/>  
 
 These are DB servers.  
 
@@ -170,7 +170,7 @@ End-to-End Flow
 
 Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (4000) → DB SG (3306).  
 
-<img src="All-SG.png" alt="All Security Groups overview" width="700"/>  
+<img src="vpc/All-SG.png" alt="All Security Groups overview" width="700"/>  
 
 ---
 
