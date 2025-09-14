@@ -66,7 +66,7 @@ Purpose: The IGW is the door between my VPC and the public internet. It allows r
 
 NAT Gateways:  
 
-Action: Created one NAT Gateway in each public subnet (AZ1 and AZ2).  
+Action: Created one NAT Gateway in each public subnet (web tier AZ1 and AZ2).  
 
 <img src="vpc/created-NAT-gateway.png" alt="NAT Gateway created" width="600"/>  
 
