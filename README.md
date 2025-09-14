@@ -42,7 +42,7 @@ The Plan: Carve the large VPC CIDR into smaller, non-overlapping blocks using a 
 
 <img src="vpc/CIDR%2019%20error.png" alt="CIDR overlap error" width="800"/>  
 
-> The Fix & Lesson: I corrected the CIDR to 10.0.32.0/20. This was a great hands-on lesson in how CIDR blocks work and why careful planning is essential to avoid IP address overlap.  
+> The Fix & Lesson: I corrected the CIDR to 10.0.32.0/20. This was a great hands-on lesson in how CIDR blocks work as its essential to avoid IP address overlap.  
 
 Final Subnet Setup:  
 
