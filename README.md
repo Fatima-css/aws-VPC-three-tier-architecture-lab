@@ -27,8 +27,7 @@ Purpose: This role ensures our instances can securely access what they need with
 ### VPC and Subnets  
 
 VPC Creation:  Created a VPC named 3-tier-vpc with the CIDR block 10.0.0.0/16.  
-
-What this means: This VPC acts as my private network in the cloud, providing 65,536 possible IP addresses (from 10.0.0.0 to 10.0.255.255).  
+what is a VPC...: This VPC acts as my private network in the cloud, providing 65,536 possible IP addresses (from 10.0.0.0 to 10.0.255.255).  
 
 Subnet Creation:  
 
