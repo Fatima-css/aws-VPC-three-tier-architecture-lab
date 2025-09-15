@@ -98,7 +98,7 @@ For each, I added a route sending all non-VPC traffic (0.0.0.0/0) to the NAT Gat
 <img src="vpc/edit-routes-NAT-gateway.png" alt="Route to NAT Gateway" width="600"/>  
 <img src="vpc/edit-subnet-association-private-app-subnet.png" alt="Subnet association for private app tier" width="600"/>  
 
-I associated Private-route-AZ1 with the private subnets in AZ1 (App and DB), and Private-route-AZ2 with the private subnets in AZ2.  
+I associated Private-route-AZ1 with the private App subnets in AZ1, and Private-route-AZ2 with the private App subnets in AZ2.  
 
 Purpose: This ensures that if an app server in AZ1 needs to access the internet, its traffic goes through the NAT Gateway in AZ1, keeping the traffic flow within the same AZ for performance and cost efficiency.  
 
