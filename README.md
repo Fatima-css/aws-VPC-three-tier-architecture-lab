@@ -8,7 +8,7 @@ To build a secure, highly available, three-tier web application architecture on 
 ## Part 0: Initial Setup & Foundational Resources  
 
 ### S3 Bucket Creation  
-Action: Created an S3 bucket named vpc-three-tier-project.  
+Created an S3 bucket named vpc-three-tier-project.  
 
 Purpose: This bucket will store the application code that our EC2 instances will download and run.  
 
@@ -26,15 +26,13 @@ Purpose: This role ensures our instances can securely access what they need with
 
 ### VPC and Subnets  
 
-VPC Creation:  
-
-Action: Created a VPC named 3-tier-vpc with the CIDR block 10.0.0.0/16.  
+VPC Creation:  Created a VPC named 3-tier-vpc with the CIDR block 10.0.0.0/16.  
 
 What this means: This VPC acts as my private network in the cloud, providing 65,536 possible IP addresses (from 10.0.0.0 to 10.0.255.255).  
 
-Subnet Creation & A Learning Moment:  
+Subnet Creation:  
 
-Goal: Create six subnets across two Availability Zones (us-east-1a and us-east-1b) for each tier (Web, App, DB).  
+Create six subnets across two Availability Zones (us-east-1a and us-east-1b) for each tier (Web, App, DB).  
 
 The Plan: Carve the large VPC CIDR into smaller, non-overlapping blocks using a /20 mask (each providing 4,096 IPs).  
 
@@ -58,7 +56,7 @@ Final Subnet Setup:
 
 Internet Gateway (IGW):  
 
-Action: Created and attached an Internet Gateway named IGW-3-tier to the VPC.  
+Created and attached an Internet Gateway named IGW-3-tier to the VPC.  
 
 <img src="vpc/created-IGW.png" alt="Internet Gateway created" width="600"/>  
 
@@ -66,7 +64,7 @@ Purpose: The IGW is the door between my VPC and the public internet. It allows r
 
 NAT Gateways:  
 
-Action: Created one NAT Gateway in each public subnet (web tier AZ1 and AZ2).  
+Created one NAT Gateway in each public subnet (web tier AZ1 and AZ2).  
 
 <img src="vpc/created-NAT-gateway.png" alt="NAT Gateway created" width="600"/>  
 
@@ -82,7 +80,7 @@ Routing tables tell network traffic where to go. A subnet doesn't know if it's p
 
 Public Route Table:  
 
-Action: Created a route table named Public-Route-Table. Added a route sending all non-VPC traffic (0.0.0.0/0) to the Internet Gateway (IGW). Then, I explicitly associated the two Public Web Subnets with this route table.  
+Created a route table named Public-Route-Table. Added a route sending all non-VPC traffic (0.0.0.0/0) to the Internet Gateway (IGW). Then, I explicitly associated the two Public Web Subnets with this route table.  
 
 <img src="vpc/edit-routes-IGW.png" alt="Route to IGW" width="600"/>  
 <img src="vpc/edit-subnet-association-web-subnets.png" alt="Subnet association for web tier" width="600"/>  
@@ -152,9 +150,7 @@ Rules:
 - Port 4000 from Internal LB SG (so only the internal LB can talk to it).  
 - Port 4000 from my IP (so I can test directly).  
 
-Mistake I made:  
-
-When setting up, I couldn’t find my Internal LB SG in the dropdown. Turns out I was in the wrong VPC, so it didn’t show up. Switched to 3-tier VPC, problem solved.  
+>> Mistake encountered:  When setting up, I couldn’t find my Internal LB SG in the dropdown. Turns out I was in the wrong VPC, so it didn’t show up. Switched to 3-tier VPC, problem solved.  
 
 DB SG (Database Tier)  
 
