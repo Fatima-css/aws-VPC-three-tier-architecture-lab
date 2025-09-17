@@ -67,7 +67,7 @@ Created one NAT Gateway in each public subnet (web tier AZ1 and AZ2).
 
 <img src="vpc/created-NAT-gateway.png" alt="NAT Gateway created" width="600"/>  
 
-Purpose: A NAT Gateway allows instances in private subnets (like our App Tier) to initiate outbound connections to the internet (e.g., to download updates) while blocking any unsolicited inbound traffic from the internet. This is a key security feature.  
+Purpose: A NAT Gateway allows instances in private subnets (like our App and DB Tier) to initiate outbound connections to the internet (e.g., to download updates) while blocking any unsolicited inbound traffic from the internet. This is a key security feature.  
 
 Design: Each NAT Gateway in a public AZ provides internet access for the private subnets in that same AZ for high availability.  
 
