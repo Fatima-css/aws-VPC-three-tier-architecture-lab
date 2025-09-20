@@ -174,28 +174,24 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 
 **Implementation:**  
 
-1. **Engine & Creation**  
-   - Standard create → Aurora MySQL-Compatible Edition.  
-   - Defaults for engine options.  
-   <img src="vpc/config aurora pt1.png" alt="Aurora configuration step 1" width="600"/>  
-
-2. **Template & Credentials**  
+1. **Template**  
+   - Standard create: Aurora MySQL-Compatible Edition.  
    - Template: Dev/Test (non-production).  
    - Custom master username + password (stored securely).  
-   <img src="vpc/config aurora pt2.png" alt="Aurora configuration step 2" width="600"/>  
+ <img src="vpc/config aurora pt1.png" alt="Aurora configuration step 1" width="600"/> 
 
 3. **Availability & Connectivity**  
    - Multi-AZ deployment → created reader replica in another AZ.  
    - Selected `3-tier-vpc` and `DB-subnet-group`.  
-   - Public access = No (DB stays private).  
-   <img src="vpc/config aurora pt3.png" alt="Aurora configuration step 3" width="600"/>  
+   - Public access = No (DB stays private).   
+<img src="vpc/config aurora pt2.png" alt="Aurora configuration step 2" width="600"/>  
 
 4. **Security & Authentication**  
    - Attached custom DB SG (`DB-SG`).  
    - Chose password authentication.  
    - Created the database.  
    > By default, RDS attaches an auto-created SG. Replaced with custom DB-SG to restrict access only to App Tier.  
-
+ <img src="vpc/config aurora pt3.png" alt="Aurora configuration step 3" width="600"/>  
 **Result:**  
 - Aurora DB deployed across two AZs.  
 - One Writer (primary) for read/write.  
