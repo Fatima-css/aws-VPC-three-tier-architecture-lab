@@ -20,7 +20,7 @@ To build a secure, highly available, three-tier web application architecture on 
 
 **Purpose:** IAM roles provide temporary security credentials to instances, eliminating the need to store long-term access keys on instances—a critical security best practice that follows the principle of least privilege.  
 
-<img src="vpc/vpc/IAM%role.png" alt="IAM role" width="800"/>
+<img src="vpc/IAM%role.png" alt="IAM role" width="800"/>
 
 ---
 
