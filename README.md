@@ -182,13 +182,13 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 2. **Template & Credentials**  
    - Template: Dev/Test (non-production).  
    - Custom master username + password (stored securely).  
-   <img src="db/config-aurora-pt2.png" alt="Aurora configuration step 2" width="600"/>  
+   <img src="vpc/config-aurora-pt2.png" alt="Aurora configuration step 2" width="600"/>  
 
 3. **Availability & Connectivity**  
    - Multi-AZ deployment → created reader replica in another AZ.  
    - Selected `3-tier-vpc` and `DB-subnet-group`.  
    - Public access = No (DB stays private).  
-   <img src="db/config-aurora-pt3.png" alt="Aurora configuration step 3" width="600"/>  
+   <img src="vpc/config-aurora-pt3.png" alt="Aurora configuration step 3" width="600"/>  
 
 4. **Security & Authentication**  
    - Attached custom DB SG (`DB-SG`).  
@@ -202,7 +202,7 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 - One Reader (replica) for read-only scaling.  
 - High availability and fault tolerance achieved.  
 
-<img src="db/created-DB.png" alt="Aurora DB created" width="600"/>  
+<img src="vpc/created-DB.png" alt="Aurora DB created" width="600"/>  
 
 **Database Endpoints:**  
 - **Writer Endpoint:** Used for INSERT, UPDATE, DELETE (application writes).  
