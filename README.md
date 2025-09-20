@@ -182,7 +182,7 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 2. **Template & Credentials**  
    - Template: Dev/Test (non-production).  
    - Custom master username + password (stored securely).  
-   <img src="vpc/config-aurora-pt2.png" alt="Aurora configuration step 2" width="600"/>  
+   <img src="vpc/config aurora pt2.png" alt="Aurora configuration step 2" width="600"/>  
 
 3. **Availability & Connectivity**  
    - Multi-AZ deployment → created reader replica in another AZ.  
