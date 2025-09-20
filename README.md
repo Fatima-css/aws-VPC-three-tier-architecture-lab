@@ -191,7 +191,8 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
    - Chose password authentication.  
    - Created the database.  
    > By default, RDS attaches an auto-created SG. Replaced with custom DB-SG to restrict access only to App Tier.  
- <img src="vpc/config aurora pt3.png" alt="Aurora configuration step 3" width="600"/>  
+ <img src="vpc/config aurora pt3.png" alt="Aurora configuration step 3" width="600"/>
+   
 **Result:**  
 - Aurora DB deployed across two AZs.  
 - One Writer (primary) for read/write.  
