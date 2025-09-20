@@ -177,7 +177,7 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 1. **Engine & Creation**  
    - Standard create → Aurora MySQL-Compatible Edition.  
    - Defaults for engine options.  
-   <img src="vpc/config-aurora-pt1.png" alt="Aurora configuration step 1" width="600"/>  
+   <img src="vpc/config%aurora%pt1.png" alt="Aurora configuration step 1" width="600"/>  
 
 2. **Template & Credentials**  
    - Template: Dev/Test (non-production).  
