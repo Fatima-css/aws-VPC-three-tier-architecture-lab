@@ -438,7 +438,7 @@ A health check endpoint is a standard practice in web development to confirm a s
 ```
 
 ### 2. Database Connection Test
-Purpose: This test verifies if the application tier is able to connect to the database, query data, and return a result. A successful response confirms that the networking, security, and database configurations are correct.
+**Purpose:** This test verifies if the application tier is able to connect to the database, query data, and return a result. A successful response confirms that the networking, security, and database configurations are correct.
 
 To test the database connection, I ran the following command in the terminal to hit the /transaction endpoint locally:
 ```
