@@ -321,7 +321,6 @@ SELECT * FROM transactions;
 ```
 - When finished, just type exit and hit enter to exit the MySQL client.
 
-
 ---
 ## Configure App Instance
 ### The goal of this section was to get the web application running on the App Instance. 
@@ -411,7 +410,7 @@ pm2 startup
 This will output a custom command.
 Copy-paste the command shown in your terminal
 
-<img src="vpc/config app instance3.png" alt="app instance1" width="600"/>
+<img src="vpc/config app instance3.png" alt="app instance1" width="800"/>
 
 Finally, save the PM2 process list so it reloads on reboot:
 ```
@@ -419,7 +418,7 @@ pm2 save
 ```
 This ensures the app automatically restarts if the instance is rebooted or turned into an AMI.
 
-<img src="vpc/config app instance4.png" alt="app instance4" width="600"/>
+<img src="vpc/config app instance4.png" alt="app instance4" width="800"/>
 
 ---
 ## Test App Tier
@@ -450,4 +449,4 @@ The command should return the test data that was previously inserted into the da
 {"result":[{"id":1,"amount":400,"description":"groceries"},{"id":2,"amount":100,"description":"class"},{"id":3,"amount":200,"description":"other groceries"},{"id":4,"amount":10,"description":"brownies"}]}
 ```
 
-<img src="vpc/test app tier.png" alt="app tier test" width="600"/>
+<img src="vpc/test app tier.png" alt="app tier test" width="800"/>
