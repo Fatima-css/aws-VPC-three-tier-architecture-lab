@@ -244,7 +244,7 @@ sudo -su ec2-user
 ```
 ping 8.8.8.8
 ```
-<img src="vpc/connect 1.png" alt="ping" width="600"/>
+<img src="vpc/connect 1.png" alt="ping" width="800"/>
 
 
 ## Database Configuration from App Instance
@@ -259,7 +259,7 @@ ping 8.8.8.8
 sudo yum install mariadb105 -y
 ```
 
-<img src="vpc/connect 2 sudo install error+fix.png" alt="mariadb install" width="600"/>
+<img src="vpc/connect 2 sudo install error+fix.png" alt="mariadb install" width="800"/>
 
 ---
 
