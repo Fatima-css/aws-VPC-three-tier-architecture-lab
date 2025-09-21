@@ -204,3 +204,121 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 **Database Endpoints:**  
 - **Writer Endpoint:** Used for INSERT, UPDATE, DELETE (application writes).  
 - **Reader Endpoint:** Used for SELECT (read-only queries). Since our app modifies data (e.g., transactions table), Writer Endpoint was essential.  
+
+---
+
+## Part 3: App Tier Instance Deployment   
+
+### App Instance Launch  
+
+**Purpose:** The App Tier runs the backend logic (Node.js) and communicates with the Aurora database. It is deployed in private subnets, accessible only through the internal load balancer and NAT gateway for outbound internet.  
+
+**Implementation:**  
+- Launched an EC2 instance in the **Private App Subnet**.  
+- Configuration:  
+  - **AMI:** Amazon Linux 2 (HVM), Kernel 5.10  
+  - **Instance Type:** `t2.micro` (Free Tier)  
+  - **Network:** `3-tier-vpc`  
+  - **Subnet:** Private App Subnet  
+  - **Auto-assign Public IP:** Disabled  
+  - **Security Group:** `PrivateInstanceSG` (port 4000 allowed)  
+  - **IAM Role:** `EC2andS3Role` (with S3 + SSM permissions)  
+- Did not use a key pair—connected via **AWS Systems Manager Session Manager**.  
+
+<img src="vpc/launch instance1.png" alt="App Instance Launch step 1" width="600"/>  
+<img src="vpc/launch instance2.png" alt="App Instance Launch step 2" width="600"/>  
+<img src="vpc/launch instance3.png" alt="App Instance Launch step 3" width="600"/>  
+
+---
+### Connecting to Instance  
+
+**Implementation:**  
+- Navigate to **Instances**, select the running instance, and click **Connect, Session Manager, Connect**.  
+- Used **Session Manager** to connect securely (no SSH keys).  
+- Switched to **ec2-user** for full permissions.  
+
+```bash
+sudo -su ec2-user
+
+- Verified outbound internet connectivity (through NAT Gateway):
+
+ping 8.8.8.8
+
+<img src="vpc/connect 1.png" alt="sudo and ping" width="600"/>
+
+
+## Database Configuration from App Instance
+
+**Objective:** Connect the App Tier EC2 instance to Aurora RDS, create a database and table, and insert initial test data.
+
+### 1️. Install MySQL/MariaDB Client
+
+**Implementation:**  
+- The workshop originally used an older command to install MySQL:
+sudo yum install mysql -y  
+- Researched and installed the correct package for Amazon Linux 2023:
+sudo yum install mariadb105 -y
+
+> **Why:** Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
+
+<img src="vpc/sudo install error+fix.png" alt="mariadb install error and fix" width="600"/>
+
+---
+
+### 2️. Connect to Aurora RDS (Writer Endpoint)
+
+**Implementation:**  
+- Connected to the Aurora RDS **writer endpoint** using the master username(admin) created during deployment:
+mysql -h <RDS_WRITER_ENDPOINT> -u <DB_USERNAME> -p
+Replace <RDS_WRITER_ENDPOINT> with your Aurora writer endpoint.  
+- Entered the database password when prompted.  
+
+> **Why:** Connecting to the **writer endpoint** allows the App Tier to perform read/write operations (INSERT, UPDATE, DELETE).
+
+<img src="vpc/mysql -h.png" alt="MySQL DB connection" width="600"/>
+
+---
+
+### 3️⃣ Create Database
+
+**Implementation:**  
+-Create a database called webappdb with the following command using the MySQL CLI:
+
+CREATE DATABASE webappdb;
+
+ > **Note:** Encountered a **case sensitivity issue** when creating the database. Initially, the database name was typed inconsistently (`webappdB`). Fixed by using lowercase consistently (`webappdb`).
+<img src="vpc/error case sensative.png" alt="Case sensitivity error" width="600"/>
+
+Verify it was created:
+SHOW DATABASES;
+
+-Create a data table by first navigating to the database we just created:  
+USE webappdb;
+
+
+-Then, create the following transactions table by executing this create table command:
+
+CREATE TABLE IF NOT EXISTS transactions (
+  id INT NOT NULL AUTO_INCREMENT,
+  amount DECIMAL(10,2),
+  description VARCHAR(100),
+  PRIMARY KEY(id)
+);
+
+-Verify the table was created:
+
+SHOW TABLES;  
+
+<img src="vpc/create webappdb.png" alt="Database created" width="600"/>
+
+-Insert data into table for use/testing later:
+INSERT INTO transactions (amount, description) VALUES (400, 'groceries');
+
+
+Verify that your data was added by executing the following command:
+
+SELECT * FROM transactions;
+
+
+
+
