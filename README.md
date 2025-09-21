@@ -249,7 +249,7 @@ ping 8.8.8.8
 
 ## Database Configuration from App Instance
 
-**Objective:** Connect the App Tier EC2 instance to Aurora RDS, create a database and table, and insert initial test data.
+**Objective:** Connect the App Tier EC2 instance to Aurora RDS, create a database and table, and insert initial test data. You are essentially using the App Instance as a tool to connect to your database and build its structure.
 
 ### 1️. Install MariaDB Client
  
@@ -283,7 +283,7 @@ Replace <RDS_WRITER_ENDPOINT> with your Aurora writer endpoint and <DB_USERNAME>
 
 ### 3️. Create Database
 
--Create a database called webappdb with the following command using the MySQL CLI:
+- Create a database called webappdb with the following command using the MySQL CLI:
 
 ```
 CREATE DATABASE webappdb;
@@ -291,17 +291,17 @@ CREATE DATABASE webappdb;
  > **Note:** Encountered a **case sensitivity issue** when creating the database. Initially, the database name was typed inconsistently (`webappdB`). Fixed by using lowercase consistently (`webappdb`).
 <img src="vpc/error case sensative.png" alt="Case sensitivity error" width="600"/>
 
--Verify it was created:
+- Verify it was created:
 ```
 SHOW DATABASES;
 ```
 
--Create a data table by first navigating to the database we just created:  
+- Create a data table by first navigating to the database we just created:  
 ```
 USE webappdb;
 ```
 
--Then, create the following transactions table by executing this create table command:
+- Then, create the following transactions table by executing this create table command:
 ```
 CREATE TABLE IF NOT EXISTS transactions (
   id INT NOT NULL AUTO_INCREMENT,
@@ -311,22 +311,22 @@ CREATE TABLE IF NOT EXISTS transactions (
 );
 ```
 
--Verify the table was created:
+- Verify the table was created:
 ```
 SHOW TABLES;  
 ```
 <img src="vpc/create webappdb.png" alt="Database created" width="600"/>
 
--Insert data into table for use/testing later:
+- Insert data into table for use/testing later:
 ```
 INSERT INTO transactions (amount, description) VALUES (400, 'groceries');
 ```
 
-Verify that your data was added by executing the following command:
+- Verify that your data was added by executing the following command:
 ```
 SELECT * FROM transactions;
 ```
--When finished, just type exit and hit enter to exit the MySQL client.
+- When finished, just type exit and hit enter to exit the MySQL client.
 
 
 
