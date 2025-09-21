@@ -244,7 +244,7 @@ sudo -su ec2-user
 ```
 ping 8.8.8.8
 ```
-<img src="vpc/connect 1.png" alt="sudo and ping" width="600"/>
+<img src="vpc/connect 1.png" alt="ping" width="600"/>
 
 
 ## Database Configuration from App Instance
@@ -262,7 +262,7 @@ sudo yum install mariadb105 -y
 
 > Note: Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
 
-<img src="vpc/sudo install error+fix.png" alt="mariadb install error and fix" width="600"/>
+<img src="vpc/connect 2 sudo install error+fix" alt="mariadb install error and fix" width="600"/>
 
 ---
 
@@ -277,8 +277,6 @@ Replace <RDS_WRITER_ENDPOINT> with your Aurora writer endpoint and <DB_USERNAME>
 
 > **Why:** Connecting to the **writer endpoint** allows the App Tier to perform read/write operations (INSERT, UPDATE, DELETE).
 
-<img src="vpc/mysql -h.png" alt="MySQL DB connection" width="600"/>
-
 ---
 
 ### 3️. Create Database
@@ -289,7 +287,6 @@ Replace <RDS_WRITER_ENDPOINT> with your Aurora writer endpoint and <DB_USERNAME>
 CREATE DATABASE webappdb;
 ```
  > **Note:** Encountered a **case sensitivity issue** when creating the database. Initially, the database name was typed inconsistently (`webappdB`). Fixed by using lowercase consistently (`webappdb`).
-<img src="vpc/error case sensative.png" alt="Case sensitivity error" width="600"/>
 
 - Verify it was created:
 ```
@@ -315,7 +312,6 @@ CREATE TABLE IF NOT EXISTS transactions (
 ```
 SHOW TABLES;  
 ```
-<img src="vpc/create webappdb.png" alt="Database created" width="600"/>
 
 - Insert data into table for use/testing later:
 ```
@@ -327,6 +323,4 @@ INSERT INTO transactions (amount, description) VALUES (400, 'groceries');
 SELECT * FROM transactions;
 ```
 - When finished, just type exit and hit enter to exit the MySQL client.
-
-
 
