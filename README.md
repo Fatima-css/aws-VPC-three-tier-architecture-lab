@@ -326,7 +326,7 @@ SELECT * FROM transactions;
 ## Configure App Instance
 ### The goal of this section was to get the web application running on the App Instance. 
 
-1. Updating Application Credentials
+### 1. Updating Application Credentials
 I opened the **DbConfig.js** file from the repository and updated it with my database credentials:
 
 - **Hostname**: The Aurora writer endpoint  
@@ -339,33 +339,76 @@ The application needs the correct credentials and endpoint so it can connect to 
 
 > **Note:** As mentioned in the workshop, storing credentials directly in a file is not a best practice in production. In real-world applications, services like **AWS Secrets Manager** are used for secure storage.  
 
-2. Upload the app-tier folder to the S3 bucket that you created in part 0.
+---
+
+### 2. Upload the app-tier folder to the S3 bucket that you created in part 0.
 <img src="vpc/add app folder in S3 bucket.png" alt="upload folder to s3" width="600"/>
 
-3. Go back to the App Instance's SSM session to install the necessary software components to run the backend application
-- Installing Dependencies
+---
 
-a. Install NVM (Node Version Manager):NVM lets us install and switch between different Node.js versions.
+### 3. Go back to the App Instance's SSM session to install the necessary software components to run the backend application
+
+- ** a. Install NVM (Node Version Manager):NVM lets us install and switch between different Node.js versions.
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source ~/.bashrc
 ```
-b. Install Node.js (version 16): Our app requires Node.js v16 to run.
+- ** b. Install Node.js (version 16): Our app requires Node.js v16 to run.
 ```
 nvm install 16
 nvm use 16
 ```
-c. Install PM2
+- ** c. Install PM2
 PM2 is a process manager that keeps the Node.js app running in the background.
 Even if we close the SSM session or the instance restarts, PM2 ensures the app stays alive.
 ```
 npm install -g pm2
 ```
-4. Download App Code from S3 to the App instance
+---
+### 4. Download App Code from S3 to the App instance
 ```
 cd ~/
 aws s3 cp s3://BUCKET_NAME/app-tier/ app-tier --recursive
 ```
 - This copies the application code from our cloud storage (S3) and places it on the App Instance, allowing the server to access the files and run the application.
 <img src="vpc/config app instance1.png" alt="app instance1" width="600"/>
+---
+### 5. Install Dependencies and Start the App
+```
+cd ~/app-tier
+npm install
+pm2 start index.js
 
+```npm install``` installs required libraries for the app.
+
+```pm2 start index.js``` launches the app with PM2.
+<img src="vpc/config app instance2.png" alt="app instance2" width="600"/>
+---
+###6. Verify the App is Running
+```
+pm2 list
+```
+- If online: the app is running.
+
+- If error: run ```pm2 logs```
+---
+
+7. Set Up PM2 for Auto-Restart
+
+Right now, PM2 only keeps the app running in this session.
+We need to make sure it auto-starts on reboot.
+```
+pm2 startup
+```
+- This will output a custom command.
+Copy-paste the command shown in your terminal
+
+<img src="vpc/config app instance3.png" alt="app instance1" width="600"/>
+
+Finally, save the PM2 process list so it reloads on reboot:
+```
+pm2 save
+```
+- This ensures the app automatically restarts if the instance is rebooted or turned into an AMI.
+
+<img src="vpc/config app instance4.png" alt="app instance4" width="600"/>
