@@ -342,6 +342,7 @@ The application needs the correct credentials and endpoint so it can connect to 
 ---
 
 ### 2. Upload the app-tier folder to the S3 bucket that you created in part 0.
+
 <img src="vpc/add app folder in S3 bucket.png" alt="upload folder to s3" width="600"/>
 
 ---
@@ -371,6 +372,7 @@ cd ~/
 aws s3 cp s3://BUCKET_NAME/app-tier/ app-tier --recursive
 ```
 - This copies the application code from our cloud storage (S3) and places it on the App Instance, allowing the server to access the files and run the application.
+
 <img src="vpc/config app instance1.png" alt="app instance1" width="600"/>
 
 ---
@@ -385,6 +387,7 @@ pm2 start index.js
 ```npm install``` installs required libraries for the app.
 
 ```pm2 start index.js``` launches the app with PM2.
+
 <img src="vpc/config app instance2.png" alt="app instance2" width="600"/>
 
 ---
