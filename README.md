@@ -225,9 +225,9 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
   - **IAM Role:** `EC2andS3Role` (with S3 + SSM permissions)  
 - Did not use a key pair—connected via **AWS Systems Manager Session Manager**.  
 
-<img src="vpc/launch instance1.png" alt="App Instance Launch step 1" width="600"/>  
-<img src="vpc/launch instance2.png" alt="App Instance Launch step 2" width="600"/>  
-<img src="vpc/launch instance3.png" alt="App Instance Launch step 3" width="600"/>  
+<img src="vpc/launch app instance1.png" alt="App Instance Launch step 1" width="600"/>  
+<img src="vpc/launch app instance2.png" alt="App Instance Launch step 2" width="600"/>  
+<img src="vpc/launch app instance3.png" alt="App Instance Launch step 3" width="600"/>  
 
 ---
 ### Connecting to Instance  
