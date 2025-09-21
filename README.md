@@ -346,7 +346,7 @@ The application needs the correct credentials and endpoint so it can connect to 
 
 ---
 
-**3. Go back to the App Instance's SSM session to install the necessary software components to run the backend application**
+**3.Go back to the App Instance's SSM session to install the necessary software components to run the backend application**
 
 - a. Install NVM (Node Version Manager):
 NVM lets us install and switch between different Node.js versions.
