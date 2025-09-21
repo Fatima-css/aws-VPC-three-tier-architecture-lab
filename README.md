@@ -388,7 +388,8 @@ pm2 start index.js
 
 ---
 
-###6. Verify the App is Running
+### 6. Verify the App is Running
+
 ```
 pm2 list
 ```
