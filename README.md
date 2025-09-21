@@ -241,9 +241,9 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 sudo -su ec2-user
 ```
 - Verified outbound internet connectivity (through NAT Gateway):
-
+```
 ping 8.8.8.8
-
+```
 <img src="vpc/connect 1.png" alt="sudo and ping" width="600"/>
 
 
@@ -255,9 +255,11 @@ ping 8.8.8.8
 
 **Implementation:**  
 - The workshop originally used an older command to install MySQL:
-sudo yum install mysql -y  
+```sudo yum install mysql -y```  
 - Researched and installed the correct package for Amazon Linux 2023:
+```
 sudo yum install mariadb105 -y
+```
 
 > **Why:** Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
 
