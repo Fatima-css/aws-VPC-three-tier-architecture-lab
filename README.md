@@ -323,7 +323,7 @@ SELECT * FROM transactions;
 
 ---
 ## Configure App Instance
-### The goal of this section was to get the web application running on the App Instance. 
+**The goal of this section was to get the web application running on the App Instance.** 
 
 **1. Updating Application Credentials**
 I opened the **DbConfig.js** file from the repository and updated it with my database credentials:
@@ -367,7 +367,7 @@ Even if we close the SSM session or the instance restarts, PM2 ensures the app s
 npm install -g pm2
 ```
 ---
-### 4. Download App Code from S3 to the App instance
+**4. Download App Code from S3 to the App instance**
 ```
 cd ~/
 aws s3 cp s3://BUCKET_NAME/app-tier/ app-tier --recursive
@@ -378,7 +378,7 @@ This copies the application code from our cloud storage (S3) and places it on th
 
 ---
 
-### 5. Install Dependencies and Start the App
+** 5. Install Dependencies and Start the App**
 ```
 cd ~/app-tier
 npm install
@@ -393,7 +393,7 @@ pm2 start index.js
 
 ---
 
-### 6. Verify the App is Running
+**6. Verify the App is Running**
 ```
 pm2 list
 ```
