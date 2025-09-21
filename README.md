@@ -109,7 +109,7 @@ Security Groups act as firewalls at the instance level. They decide who can talk
 > **Note:** Always pick the `3-tier-vpc`, not the Default VPC.  
 
 **External Load Balancer SG**  
-- **Purpose:** The “front door” for the app—takes traffic from internet users.  
+- **Purpose:** The “front door” for the app, that takes traffic from internet users.  
 - **Rule:** Allow HTTP (80) from my IP (for testing).  
 
 <img src="vpc/Load-balancer-SG.png" alt="Load Balancer Security Group" width="600"/>  
@@ -251,24 +251,24 @@ ping 8.8.8.8
 
 **Objective:** Connect the App Tier EC2 instance to Aurora RDS, create a database and table, and insert initial test data.
 
-### 1️. Install MySQL/MariaDB Client
-
-**Implementation:**  
+### 1️. Install MariaDB Client
+ 
 - The workshop originally used an older command to install MySQL:```sudo yum install mysql -y```  
 - Researched and installed the correct package for Amazon Linux 2023:
 ```
 sudo yum install mariadb105 -y
 ```
-> **Why:** Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
+-This command installs the tool that lets your App Instance talk to your database.
+
+> Note: Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
 
 <img src="vpc/sudo install error+fix.png" alt="mariadb install error and fix" width="600"/>
 
 ---
 
-### 2️. Connect to Aurora RDS (Writer Endpoint)
-
-**Implementation:**  
-- Connected to the Aurora RDS **writer endpoint**:
+### 2️. Connecting to Aurora RDS (Writer Endpoint)
+ 
+- This command uses the tool you just installed to open a connection to your database (Aurora RDS).
 ```
 mysql -h <RDS_WRITER_ENDPOINT> -u <DB_USERNAME> -p
 ```
@@ -283,7 +283,6 @@ Replace <RDS_WRITER_ENDPOINT> with your Aurora writer endpoint and <DB_USERNAME>
 
 ### 3️. Create Database
 
-**Implementation:**  
 -Create a database called webappdb with the following command using the MySQL CLI:
 
 ```
@@ -292,7 +291,7 @@ CREATE DATABASE webappdb;
  > **Note:** Encountered a **case sensitivity issue** when creating the database. Initially, the database name was typed inconsistently (`webappdB`). Fixed by using lowercase consistently (`webappdb`).
 <img src="vpc/error case sensative.png" alt="Case sensitivity error" width="600"/>
 
-Verify it was created:
+-Verify it was created:
 ```
 SHOW DATABASES;
 ```
