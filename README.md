@@ -342,8 +342,8 @@ The application needs the correct credentials and endpoint so it can connect to 
 2. Upload the app-tier folder to the S3 bucket that you created in part 0.
 <img src="vpc/add app folder in S3 bucket.png" alt="upload folder to s3" width="600"/>
 
-3. Go back to your **SSM session** for the App Instance.  
-- Here we’ll install the software needed to run the backend application.
+3. Go back to the App Instance's SSM session to install the necessary software components to run the backend application
+- Installing Dependencies
 
 a. Install NVM (Node Version Manager):NVM lets us install and switch between different Node.js versions.
 ```
