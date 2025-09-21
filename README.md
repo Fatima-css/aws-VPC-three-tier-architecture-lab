@@ -262,7 +262,7 @@ sudo yum install mariadb105 -y
 
 > Note: Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
 
-<img src="vpc/connect 2 sudo install error+fix" alt="mariadb install error and fix" width="600"/>
+<img src="vpc/connect 2 sudo install error+fix.png" alt="mariadb install" width="600"/>
 
 ---
 
