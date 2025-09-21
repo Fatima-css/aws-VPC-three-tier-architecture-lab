@@ -251,7 +251,7 @@ ping 8.8.8.8
 
 **Objective:** Connect the App Tier EC2 instance to Aurora RDS, create a database and table, and insert initial test data. You are essentially using the App Instance as a tool to connect to your database and build its structure.
 
-### 1️. Install MariaDB Client
+**1. Install MariaDB Client**
 - This command installs the tool that lets your App Instance talk to your database.
 > Note: The workshop originally used an older command to install MySQL:```sudo yum install mysql -y```. Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
 - Researched and installed the correct package for Amazon Linux 2023:
@@ -263,7 +263,7 @@ sudo yum install mariadb105 -y
 
 ---
 
-### 2️. Connecting to Aurora RDS (Writer Endpoint)
+**2. Connecting to Aurora RDS (Writer Endpoint)**
  
 - This command uses the tool you just installed to open a connection to your database (Aurora RDS).
 ```
@@ -276,7 +276,7 @@ Replace <RDS_WRITER_ENDPOINT> with your Aurora writer endpoint and <DB_USERNAME>
 
 ---
 
-### 3️. Create Database
+**3. Create Database**
 
 - Create a database called webappdb with the following command using the MySQL CLI:
 
@@ -346,7 +346,7 @@ The application needs the correct credentials and endpoint so it can connect to 
 
 ---
 
-**3.Go back to the App Instance's SSM session to install the necessary software components to run the backend application**
+**3. Go back to the App Instance's SSM session to install the necessary software components to run the backend application**
 
 - a. Install NVM (Node Version Manager):
 NVM lets us install and switch between different Node.js versions.
