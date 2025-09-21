@@ -237,8 +237,8 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 - Used **Session Manager** to connect securely (no SSH keys).  
 - Switched to **ec2-user** for full permissions.  
 
-```bash
-sudo -su ec2-user```
+bash
+sudo -su ec2-user
 
 - Verified outbound internet connectivity (through NAT Gateway):
 
