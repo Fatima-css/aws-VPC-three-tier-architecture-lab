@@ -390,7 +390,6 @@ pm2 start index.js
 ---
 
 ### 6. Verify the App is Running
-
 ```
 pm2 list
 ```
@@ -399,15 +398,13 @@ pm2 list
 - If error: run `pm2 logs`
 ---
 
-7. Set Up PM2 for Auto-Restart
+### 7. Set Up PM2 for Auto-Restart
 
 Right now, PM2 only keeps the app running in this session.
 We need to make sure it auto-starts on reboot.
-
 ```
 pm2 startup
 ```
-
 - This will output a custom command.
 Copy-paste the command shown in your terminal
 
