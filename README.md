@@ -432,7 +432,7 @@ curl http://localhost:4000/health
 ```
 A health check endpoint is a standard practice in web development to confirm a service is up and responding.
 
-### Expected result:
+**Expected result:**
 ```
 "This is the health check"
 ```
@@ -444,8 +444,8 @@ To test the database connection, I ran the following command in the terminal to 
 ```
 curl http://localhost:4000/transaction
 ```
-
-*** Expected result:
+**Expected result:**
+The command should return the test data that was previously inserted into the database. The response confirms the application's ability to retrieve data.
 ```
 {"result":[{"id":1,"amount":400,"description":"groceries"},{"id":2,"amount":100,"description":"class"},{"id":3,"amount":200,"description":"other groceries"},{"id":4,"amount":10,"description":"brownies"}]}
 ```
