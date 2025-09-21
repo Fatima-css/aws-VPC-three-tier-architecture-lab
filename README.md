@@ -380,6 +380,7 @@ aws s3 cp s3://BUCKET_NAME/app-tier/ app-tier --recursive
 cd ~/app-tier
 npm install
 pm2 start index.js
+```
 
 ```npm install``` installs required libraries for the app.
 
@@ -395,7 +396,7 @@ pm2 list
 ```
 - If online: the app is running.
 
-- If error: run ```pm2 logs```
+- If error: run `pm2 logs`
 ---
 
 7. Set Up PM2 for Auto-Restart
