@@ -238,7 +238,7 @@ Internet → External LB SG → Web Tier SG → Internal LB SG → App Tier SG (
 - Switched to **ec2-user** for full permissions.  
 
 ```bash
-sudo -su ec2-user
+sudo -su ec2-user```
 
 - Verified outbound internet connectivity (through NAT Gateway):
 
