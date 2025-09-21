@@ -252,15 +252,12 @@ ping 8.8.8.8
 **Objective:** Connect the App Tier EC2 instance to Aurora RDS, create a database and table, and insert initial test data. You are essentially using the App Instance as a tool to connect to your database and build its structure.
 
 ### 1️. Install MariaDB Client
- 
-- The workshop originally used an older command to install MySQL:```sudo yum install mysql -y```  
+- This command installs the tool that lets your App Instance talk to your database.
+> Note: The workshop originally used an older command to install MySQL:```sudo yum install mysql -y```. Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
 - Researched and installed the correct package for Amazon Linux 2023:
 ```
 sudo yum install mariadb105 -y
 ```
--This command installs the tool that lets your App Instance talk to your database.
-
-> Note: Amazon Linux updates frequently. The older `mysql` package is deprecated; `mariadb105` provides the MySQL-compatible client for connecting to Aurora.
 
 <img src="vpc/connect 2 sudo install error+fix.png" alt="mariadb install" width="600"/>
 
