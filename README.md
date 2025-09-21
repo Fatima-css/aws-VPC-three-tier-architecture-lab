@@ -372,7 +372,9 @@ aws s3 cp s3://BUCKET_NAME/app-tier/ app-tier --recursive
 ```
 - This copies the application code from our cloud storage (S3) and places it on the App Instance, allowing the server to access the files and run the application.
 <img src="vpc/config app instance1.png" alt="app instance1" width="600"/>
+
 ---
+
 ### 5. Install Dependencies and Start the App
 ```
 cd ~/app-tier
@@ -383,7 +385,9 @@ pm2 start index.js
 
 ```pm2 start index.js``` launches the app with PM2.
 <img src="vpc/config app instance2.png" alt="app instance2" width="600"/>
+
 ---
+
 ###6. Verify the App is Running
 ```
 pm2 list
