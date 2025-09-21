@@ -371,7 +371,7 @@ npm install -g pm2
 cd ~/
 aws s3 cp s3://BUCKET_NAME/app-tier/ app-tier --recursive
 ```
-- This copies the application code from our cloud storage (S3) and places it on the App Instance, allowing the server to access the files and run the application.
+This copies the application code from our cloud storage (S3) and places it on the App Instance, allowing the server to access the files and run the application.
 
 <img src="vpc/config app instance1.png" alt="app instance1" width="600"/>
 
@@ -384,9 +384,9 @@ npm install
 pm2 start index.js
 ```
 
-```npm install``` installs required libraries for the app.
+- ```npm install``` installs required libraries for the app.
 
-```pm2 start index.js``` launches the app with PM2.
+- ```pm2 start index.js``` launches the app with PM2.
 
 <img src="vpc/config app instance2.png" alt="app instance2" width="600"/>
 
@@ -408,7 +408,7 @@ We need to make sure it auto-starts on reboot.
 ```
 pm2 startup
 ```
-- This will output a custom command.
+This will output a custom command.
 Copy-paste the command shown in your terminal
 
 <img src="vpc/config app instance3.png" alt="app instance1" width="600"/>
@@ -417,6 +417,37 @@ Finally, save the PM2 process list so it reloads on reboot:
 ```
 pm2 save
 ```
-- This ensures the app automatically restarts if the instance is rebooted or turned into an AMI.
+This ensures the app automatically restarts if the instance is rebooted or turned into an AMI.
 
 <img src="vpc/config app instance4.png" alt="app instance4" width="600"/>
+
+---
+## Test App Tier
+Will now run a couple of tests to confirm that the app is configured correctly and can connect to the database.
+
+
+### 1. Health Check Endpoint
+```
+curl http://localhost:4000/health
+```
+A health check endpoint is a standard practice in web development to confirm a service is up and responding.
+
+### Expected result:
+```
+"This is the health check"
+```
+
+### 2. Database Connection Test
+Purpose: This test verifies if the application tier is able to connect to the database, query data, and return a result. A successful response confirms that the networking, security, and database configurations are correct.
+
+To test the database connection, I ran the following command in the terminal to hit the /transaction endpoint locally:
+```
+curl http://localhost:4000/transaction
+```
+
+*** Expected result:
+```
+{"result":[{"id":1,"amount":400,"description":"groceries"},{"id":2,"amount":100,"description":"class"},{"id":3,"amount":200,"description":"other groceries"},{"id":4,"amount":10,"description":"brownies"}]}
+```
+
+<img src="vpc/test app tier.png" alt="app tier test" width="600"/>
