@@ -325,7 +325,7 @@ SELECT * FROM transactions;
 ## Configure App Instance
 ### The goal of this section was to get the web application running on the App Instance. 
 
-### 1. Updating Application Credentials
+**1. Updating Application Credentials**
 I opened the **DbConfig.js** file from the repository and updated it with my database credentials:
 
 - **Hostname**: The Aurora writer endpoint  
@@ -340,25 +340,27 @@ The application needs the correct credentials and endpoint so it can connect to 
 
 ---
 
-### 2. Upload the app-tier folder to the S3 bucket that you created in part 0.
+**2. Upload the app-tier folder to the S3 bucket that you created in part 0.**
 
 <img src="vpc/add app folder in S3 bucket.png" alt="upload folder to s3" width="600"/>
 
 ---
 
-### 3. Go back to the App Instance's SSM session to install the necessary software components to run the backend application
+**3. Go back to the App Instance's SSM session to install the necessary software components to run the backend application**
 
-- ** a. Install NVM (Node Version Manager):NVM lets us install and switch between different Node.js versions.
+- a. Install NVM (Node Version Manager):
+NVM lets us install and switch between different Node.js versions.
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 source ~/.bashrc
 ```
-- ** b. Install Node.js (version 16): Our app requires Node.js v16 to run.
+- b. Install Node.js (version 16):
+ Our app requires Node.js v16 to run.
 ```
 nvm install 16
 nvm use 16
 ```
-- ** c. Install PM2
+- c. Install PM2:
 PM2 is a process manager that keeps the Node.js app running in the background.
 Even if we close the SSM session or the instance restarts, PM2 ensures the app stays alive.
 ```
