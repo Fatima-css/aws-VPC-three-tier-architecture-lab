@@ -500,12 +500,12 @@ While the AMI is being created:
 
 ### 3. Internal Load Balancer  
 We’ll now deploy an **internal ALB** to forward requests from the web tier to the app tier.
-- Go to **Load Balancers → Create Load Balancer**.  
+- Go to **Load Balancers -> Create Load Balancer**.  
 - Choose **Application Load Balancer** (ALB).  
 - Select **Internal** (not internet-facing).  
 - Pick the correct VPC and **private subnets**.  
 - Attach the security group for the internal ALB.  
-- Listener: **HTTP (port 80)** → forward traffic to the target group created earlier.  
+- Listener: **HTTP (port 80)** -> forward traffic to the target group created earlier.  
 - Create the load balancer.  
 
 The internal ALB ensures traffic distribution across private app instances, improving fault tolerance and availability.
@@ -520,7 +520,7 @@ The internal ALB ensures traffic distribution across private app instances, impr
 The **Launch Template** defines how new app tier instances should be launched. 
 - The Launch Template is a blueprint or a recipe. It doesn't contain any code itself. Instead, it provides the instructions for AWS on how to build a new server. It tells AWS which AMI to use and specifies other settings (AMI, security, IAM role) to ensure all auto-scaled instances are consistent. 
 
-- Navigate to **Launch Templates → Create Launch Template**.  
+- Navigate to **Launch Templates -> Create Launch Template**.  
 - Name the template.  
 - Select the **App Tier AMI** created earlier.  
 - Choose **t2.micro** instance type.  
