@@ -545,10 +545,10 @@ Now we create an **Auto Scaling Group (ASG)** to automatically add/remove instan
   - **Minimum capacity**: 2  
   - **Maximum capacity**: 2  
 - Review and create the Auto Scaling Group.  
-<img src="vpc/App Tier ASG1.png" alt="App Tier ASG 1" width="600"/>
-<img src="vpc/App Tier ASG2.png" alt="App Tier ASG 2" width="600"/>
-<img src="vpc/App Tier ASG3.png" alt="App Tier ASG 3" width="600"/>
-<img src="vpc/App Tier ASG4.png" alt="App Tier ASG 4" width="600"/>
+<img src="vpc/vpc/App Tier ASG1.png" alt="App Tier ASG 1" width="600"/>
+<img src="vpc/vpc/App Tier ASG2.png" alt="App Tier ASG 2" width="600"/>
+<img src="vpc/vpc/App Tier ASG3.png" alt="App Tier ASG 3" width="600"/>
+<img src="vpc/vpc/App Tier ASG4.png" alt="App Tier ASG 4" width="600"/>
 
 The ASG ensures there are always at least 2 running app instances. If one fails, it’s automatically replaced.
 
