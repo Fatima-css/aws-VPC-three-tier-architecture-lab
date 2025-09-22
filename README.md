@@ -671,13 +671,17 @@ npm run build    #npm run build compiles the raw code into static files (HTML, C
      
 1. To get started, install NGINX by executing the following command:
 ```
-sudo amazon-linux-extras install nginx1 -y  # This command installs the NGINX software on the instance.
+sudo amazon-linux-extras install nginx1 -y  # This command didnt work because of the different version OS(Amazon Linux 2023)
 ```
+sudo dnf install nginx -y                 #This corrected command worked and installed NGINX on the instance.
+```
+
+<img src="vpc/web connect install error" alt="web connect error" width="600"/>
 
 **2. Navigate to the Nginx configuration file with the following commands and list the files in the directory:**
 ```
 cd /etc/nginx        # Navigate to the NGINX configuration directory
-ls
+ls                   #list
 ```
 
 **3. Next, you will configure NGINX. We need to delete the default configuration file and replace it with our own, which is stored in S3.:**
@@ -690,8 +694,6 @@ sudo aws s3 cp s3://BUCKET_NAME/nginx.conf .       #Be sure to replace BUCKET_NA
 ```
 sudo service nginx restart     #you must restart the NGINX service to apply the changes.
 ```
- 
-
 
 5. **Set Permissions and Auto-Start**  
 
@@ -704,16 +706,14 @@ Finally, you need to set up NGINX to start automatically every time the instance
 ```
 sudo chkconfig nginx on
 ```
-
+<img src="vpc/web connect last" alt="web connect last" width="900"/>
 ---
 
 ## Result  
-Now, when you enter the public IP of your web tier instance in a browser, you should be able to see your website. If the database is connected and working correctly, you will also be able to add data.
-
-When you navigate to the public IP address of the Web Tier instance in a browser:  
-- You should see the React application being served.  
-- If the database is properly connected, you will also see that the frontend can add and display data through the backend API.  
-
+Now, when you enter the public IP of your web tier instance in a browser, you should be able to see your website (React application being served). If the database is connected and working correctly, you will also be able to add data (through the backend API).
+<img src="vpc/final webpage" alt="final" width="800"/>
+<img src="vpc/final webpage2" alt="final2" width="600"/>
+<img src="vpc/input data" alt="data" width="800"/>
 At this point, the three-tier architecture is complete:  
 
 - **Web Tier**: Public-facing, serves the frontend, and routes API calls.  
