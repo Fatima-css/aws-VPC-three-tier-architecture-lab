@@ -720,6 +720,7 @@ Now, when you enter the public IP of your web tier instance in a browser, you sh
 <img src="vpc/final webpage.png" alt="final" width="800"/>
 <img src="vpc/final webpage2.png" alt="final2" width="600"/>
 <img src="vpc/input data.png" alt="data" width="800"/>
+
 At this point, the three-tier architecture is complete:  
 
 - **Web Tier**: Public-facing, serves the frontend, and routes API calls.  
