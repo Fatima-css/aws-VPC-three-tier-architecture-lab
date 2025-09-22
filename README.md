@@ -452,3 +452,112 @@ The command should return the test data that was previously inserted into the da
 ```
 
 <img src="vpc/test app tier.png" alt="app tier test" width="800"/>
+
+--
+
+## Internal Load Balancing and Auto Scaling  
+
+In this section, we create an **Amazon Machine Image (AMI)** of the App Tier instance, then set up **Auto Scaling** with an **Internal Load Balancer (ALB)** to make the App Tier highly available.  
+
+---
+
+### Learning Objectives  
+- Create an AMI of the App Tier  
+- Create a Launch Template  
+- Configure Auto Scaling  
+- Deploy an Internal Load Balancer  
+
+---
+
+**1. App Tier AMI**
+We first create an **Amazon Machine Image (AMI)** of our existing app tier instance. 
+The AMI is a snapshot or a "cookie cutter" of a server. It contains the operating system and all of your application's code and software already installed. 
+
+This allows us to spin up **identical instances** automatically in the future.
+- Navigate to **Instances** in the EC2 dashboard.  
+- Select the App Tier instance -> **Actions -> Image and templates -> Create Image**.  
+- Give the image a **name and description**.  
+- Monitor status under EC2 -> AMIs in the left-hand menu.  
+<img src="vpc/App tier AMI.png" alt="App tier AMI" width="600"/>
+
+---
+
+### 2. Target Group  
+The **Target Group** defines the set of instances that the ALB will route requests to.  
+
+While the AMI is being created:  
+
+- Navigate to **Target Groups** under **Load Balancing**.  
+- Click **Create Target Group**.  
+- Select **Instances** as the target type and give it a name.  
+- Set protocol: **HTTP**, port: **4000** (this is the port the Node.js app runs on).  
+- Choose the same VPC.  
+- Set health check path to **/health** (app’s health check endpoint). Ensure only healthy instances get requests. 
+- Skip registering targets for now, and finish creating the target group.  
+<img src="vpc/App Tier target group.png" alt="App Tier target group" width="600"/>
+
+---
+
+### 3. Internal Load Balancer  
+We’ll now deploy an **internal ALB** to forward requests from the web tier to the app tier.
+- Go to **Load Balancers → Create Load Balancer**.  
+- Choose **Application Load Balancer** (ALB).  
+- Select **Internal** (not internet-facing).  
+- Pick the correct VPC and **private subnets**.  
+- Attach the security group for the internal ALB.  
+- Listener: **HTTP (port 80)** → forward traffic to the target group created earlier.  
+- Create the load balancer.  
+
+The internal ALB ensures traffic distribution across private app instances, improving fault tolerance and availability.
+<img src="vpc/App Tier internal LB.png" alt="App Tier internal LB" width="600"/>
+<img src="vpc/App Tier internal LB2.png" alt="App Tier internal LB 2" width="600"/>
+<img src="vpc/App Tier internal LB3.png" alt="App Tier internal LB 3" width="600"/>
+
+
+---
+
+### 4. Launch Template  
+The **Launch Template** defines how new app tier instances should be launched. 
+- The Launch Template is a blueprint or a recipe. It doesn't contain any code itself. Instead, it provides the instructions for AWS on how to build a new server. It tells AWS which AMI to use and specifies other settings (AMI, security, IAM role) to ensure all auto-scaled instances are consistent. 
+
+- Navigate to **Launch Templates → Create Launch Template**.  
+- Name the template.  
+- Select the **App Tier AMI** created earlier.  
+- Choose **t2.micro** instance type.  
+- Skip key pair and network settings (not needed).  
+- Assign the correct **App Tier security group**.  
+- Under **Advanced details**, select the same IAM instance profile used before.  
+<img src="vpc/App Tier launch template1.png" alt=launch template 1" width="600"/>
+<img src="vpc/App Tier launch template2.png" alt="launch template 2" width="600"/>
+<img src="vpc/App Tier launch template3.png" alt="launch template 3" width="600"/>
+
+---
+
+### 5. Auto Scaling  
+Now we create an **Auto Scaling Group (ASG)** to automatically add/remove instances.
+
+- Navigate to **Auto Scaling Groups → Create Auto Scaling Group**.  
+- Name the group, select the **Launch Template**, and continue.  
+- Set the VPC and private subnets for the App Tier.  
+- Attach to the **internal load balancer’s target group**.  
+- Set group size:  
+  - **Desired capacity**: 2  
+  - **Minimum capacity**: 2  
+  - **Maximum capacity**: 2  
+- Review and create the Auto Scaling Group.  
+<img src="vpc/App Tier ASG1.png" alt="App Tier ASG 1" width="600"/>
+<img src="vpc/App Tier ASG2.png" alt="App Tier ASG 2" width="600"/>
+<img src="vpc/App Tier ASG3.png" alt="App Tier ASG 3" width="600"/>
+<img src="vpc/App Tier ASG4.png" alt="App Tier ASG 4" width="600"/>
+
+The ASG ensures there are always at least 2 running app instances. If one fails, it’s automatically replaced.
+
+---
+
+### ✅ Result  
+- Check EC2 dashboard → You should see 2 new instances launched by the ASG.  
+- Test high availability:  
+  - Manually terminate 1 instance.  
+  - The ASG should launch a new one automatically.
+    
+>> Note: The **original app instance** (used to create the AMI) is not part of the ASG. You’ll see 3 total instances. You can delete the original later, but keeping it for troubleshooting is recommended.
