@@ -527,7 +527,7 @@ The **Launch Template** defines how new app tier instances should be launched.
 - Skip key pair and network settings (not needed).  
 - Assign the correct **App Tier security group**.  
 - Under **Advanced details**, select the same IAM instance profile used before.  
-<img src="vpc/App Tier launch template.png" alt="launch template 1" width="600"/>
+<img src="vpc/App Tier launch template1.png" alt="launch template 1" width="600"/>
 <img src="vpc/App Tier launch template2.png" alt="launch template 2" width="600"/>
 <img src="vpc/App Tier launch template3.png" alt="launch template 3" width="600"/>
 
