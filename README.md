@@ -469,7 +469,7 @@ In this section, we create an **Amazon Machine Image (AMI)** of the App Tier ins
 
 ---
 
-**1. App Tier AMI**
+## 1. App Tier AMI
 We first create an **Amazon Machine Image (AMI)** of our existing app tier instance. 
 The AMI is a snapshot or a "cookie cutter" of a server. It contains the operating system and all of your application's code and software already installed. 
 
@@ -527,7 +527,7 @@ The **Launch Template** defines how new app tier instances should be launched.
 - Skip key pair and network settings (not needed).  
 - Assign the correct **App Tier security group**.  
 - Under **Advanced details**, select the same IAM instance profile used before.  
-<img src="vpc/App Tier launch template1.png" alt=launch template 1" width="600"/>
+<img src="vpc/App Tier launch template.png" alt="launch template 1" width="600"/>
 <img src="vpc/App Tier launch template2.png" alt="launch template 2" width="600"/>
 <img src="vpc/App Tier launch template3.png" alt="launch template 3" width="600"/>
 
