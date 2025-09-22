@@ -562,8 +562,7 @@ The ASG ensures there are always at least 2 running app instances. If one fails,
     
 >> Note: The **original app instance** (used to create the AMI) is not part of the ASG. You’ll see 3 total instances. You can delete the original later, but keeping it for troubleshooting is recommended.
 
-
---
+---
 
 ## Part 5: Web Tier Instance Deployment  
 
@@ -656,7 +655,7 @@ cd ~/
 aws s3 cp s3://BUCKET_NAME/web-tier/ web-tier --recursive
 ```
 
-<img src="vpc/web connect1" alt="web connect1" width="800"/>
+<img src="vpc/connect web1" alt="web connect1" width="800"/>
 
 3. **Build React Application**  
    - React code must be compiled into optimized static files before serving.  
@@ -673,7 +672,7 @@ npm run build    #npm run build compiles the raw code into static files (HTML, C
    - NGINX is a lightweight and efficient web server.
    - We will be using it as a web server that we will configure to serve our application on port 80. It serves the React build files to users and also proxies API requests to the Internal Load Balancer.
      
-1. To get started, install NGINX by executing the following command:
+**a. To get started, install NGINX by executing the following command:**
 ```
 sudo amazon-linux-extras install nginx1 -y  # This command didnt work because of the different version OS(Amazon Linux 2023)
 ```
@@ -683,25 +682,25 @@ sudo dnf install nginx -y                 #This corrected command worked and ins
 
 <img src="vpc/web connect install error" alt="web connect error" width="600"/>
 
-**2. Navigate to the Nginx configuration file with the following commands and list the files in the directory:**
+**b. Navigate to the Nginx configuration file with the following commands and list the files in the directory:**
 ```
 cd /etc/nginx        # Navigate to the NGINX configuration directory
 ls                   #list
 ```
 
-**3. Next, you will configure NGINX. We need to delete the default configuration file and replace it with our own, which is stored in S3.:**
+**c. Next, you will configure NGINX. We need to delete the default configuration file and replace it with our own, which is stored in S3.:**
 ```
 sudo rm nginx.conf                                 #Delete/remove the default configuration file.
 sudo aws s3 cp s3://BUCKET_NAME/nginx.conf .       #Be sure to replace BUCKET_NAME with your actual bucket name.
 ```
 
-** 4. Then, restart Nginx with the following command:**
+**d. Then, restart Nginx with the following command:**
 
 ```
 sudo service nginx restart     #you must restart the NGINX service to apply the changes.
 ```
 
-5. **Set Permissions and Auto-Start**  
+### 5. Set Permissions and Auto-Start 
 
 For NGINX to properly serve the React application files, you must grant it the correct permissions. This step allows NGINX to read and serve the files from the home/ec2-user directory
 ```
