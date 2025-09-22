@@ -478,7 +478,7 @@ This allows us to spin up **identical instances** automatically in the future.
 - Select the App Tier instance -> **Actions -> Image and templates -> Create Image**.  
 - Give the image a **name and description**.  
 - Monitor status under EC2 -> AMIs in the left-hand menu.  
-<img src="vpc/App tier AMI.png" alt="App tier AMI" width="600"/>
+<img src="vpc/vpc/App tier AMI.png" alt="App tier AMI" width="600"/>
 
 ---
 
@@ -494,7 +494,7 @@ While the AMI is being created:
 - Choose the same VPC.  
 - Set health check path to **/health** (app’s health check endpoint). Ensure only healthy instances get requests. 
 - Skip registering targets for now, and finish creating the target group.  
-<img src="vpc/App Tier target group.png" alt="App Tier target group" width="600"/>
+<img src="vpc/vpc/App Tier target group.png" alt="App Tier target group" width="600"/>
 
 ---
 
@@ -509,9 +509,9 @@ We’ll now deploy an **internal ALB** to forward requests from the web tier to 
 - Create the load balancer.  
 
 The internal ALB ensures traffic distribution across private app instances, improving fault tolerance and availability.
-<img src="vpc/App Tier internal LB.png" alt="App Tier internal LB" width="600"/>
-<img src="vpc/App Tier internal LB2.png" alt="App Tier internal LB 2" width="600"/>
-<img src="vpc/App Tier internal LB3.png" alt="App Tier internal LB 3" width="600"/>
+<img src="vpc/vpc/App Tier internal LB.png" alt="App Tier internal LB" width="600"/>
+<img src="vpc/vpc/App Tier internal LB2.png" alt="App Tier internal LB 2" width="600"/>
+<img src="vpc/vpc/App Tier internal LB3.png" alt="App Tier internal LB 3" width="600"/>
 
 
 ---
@@ -527,9 +527,9 @@ The **Launch Template** defines how new app tier instances should be launched.
 - Skip key pair and network settings (not needed).  
 - Assign the correct **App Tier security group**.  
 - Under **Advanced details**, select the same IAM instance profile used before.  
-<img src="vpc/App Tier launch template1.png" alt="launch template 1" width="600"/>
-<img src="vpc/App Tier launch template2.png" alt="launch template 2" width="600"/>
-<img src="vpc/App Tier launch template3.png" alt="launch template 3" width="600"/>
+<img src="vpc/vpc/App Tier launch template1.png" alt="launch template 1" width="600"/>
+<img src="vpc/vpc/App Tier launch template2.png" alt="launch template 2" width="600"/>
+<img src="vpc/vpc/App Tier launch template3.png" alt="launch template 3" width="600"/>
 
 ---
 
