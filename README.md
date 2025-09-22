@@ -612,7 +612,7 @@ The Web Tier instance is created in the same way as the App Tier instance, with 
 - Attach the security group that allows inbound HTTP traffic (port 80).  
 - Attach the IAM role that allows access to S3 (instance-role).  
 - Finally click Launch instance to create the instance. 
-<img src="vpc/web instance" alt="web instance" width="600"/>
+<img src="vpc/web instance.png" alt="web instance" width="600"/>
 
 This design ensures the Web Tier is accessible to end users.  
 
@@ -655,7 +655,7 @@ cd ~/
 aws s3 cp s3://BUCKET_NAME/web-tier/ web-tier --recursive
 ```
 
-<img src="vpc/connect web1" alt="web connect1" width="800"/>
+<img src="vpc/connect web1.png" alt="web connect1" width="800"/>
 
 3. **Build React Application**  
    - React code must be compiled into optimized static files before serving.  
@@ -666,7 +666,7 @@ cd ~/web-tier
 npm install      #The npm install command first downloads and sets up all the required dependencies. 
 npm run build    #npm run build compiles the raw code into static files (HTML, CSS, and JavaScript).
 ```
-<img src="vpc/web connect2" alt="web connect2" width="900"/>
+<img src="vpc/web connect2.png" alt="web connect2" width="900"/>
 
 4. **Install and Configure NGINX**  
    - NGINX is a lightweight and efficient web server.
@@ -680,7 +680,7 @@ sudo amazon-linux-extras install nginx1 -y  # This command didnt work because of
 sudo dnf install nginx -y                 #This corrected command worked and installed NGINX on the instance.
 ```
 
-<img src="vpc/web connect install error" alt="web connect error" width="600"/>
+<img src="vpc/web connect install error.png" alt="web connect error" width="600"/>
 
 **b. Navigate to the Nginx configuration file with the following commands and list the files in the directory:**
 ```
@@ -711,15 +711,15 @@ Finally, you need to set up NGINX to start automatically every time the instance
 ```
 sudo chkconfig nginx on
 ```
-<img src="vpc/web connect last" alt="web connect last" width="900"/>
+<img src="vpc/web connect last.png" alt="web connect last" width="900"/>
 
 ---
 
 ## Result  
 Now, when you enter the public IP of your web tier instance in a browser, you should be able to see your website (React application being served). If the database is connected and working correctly, you will also be able to add data (through the backend API).
-<img src="vpc/final webpage" alt="final" width="800"/>
-<img src="vpc/final webpage2" alt="final2" width="600"/>
-<img src="vpc/input data" alt="data" width="800"/>
+<img src="vpc/final webpage.png" alt="final" width="800"/>
+<img src="vpc/final webpage2.png" alt="final2" width="600"/>
+<img src="vpc/input data.png" alt="data" width="800"/>
 At this point, the three-tier architecture is complete:  
 
 - **Web Tier**: Public-facing, serves the frontend, and routes API calls.  
