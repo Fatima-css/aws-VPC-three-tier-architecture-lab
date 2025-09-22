@@ -613,7 +613,7 @@ The Web Tier instance is created in the same way as the App Tier instance, with 
 - Attach the security group that allows inbound HTTP traffic (port 80).  
 - Attach the IAM role that allows access to S3 (instance-role).  
 - Finally click Launch instance to create the instance. 
-<img src="vpc/web instance" alt="web instace" width="600"/>
+<img src="vpc/web instance" alt="web instance" width="600"/>
 
 This design ensures the Web Tier is accessible to end users.  
 
@@ -647,17 +647,21 @@ source ~/.bashrc
 nvm install 16
 nvm use 16
 ```
+
 2. **Download Web Tier Code from S3**  
    - The necessary source code for the frontend application files are stored in S3 bucket, this command copies them to the Web Tier instance:
+  
 ```
 cd ~/
 aws s3 cp s3://BUCKET_NAME/web-tier/ web-tier --recursive
 ```
+
 <img src="vpc/web connect1" alt="web connect1" width="800"/>
 
 3. **Build React Application**  
    - React code must be compiled into optimized static files before serving.  
-   - Use `npm install` to install dependencies, then `npm run build` to create the production-ready files.  
+   - Use `npm install` to install dependencies, then `npm run build` to create the production-ready files.
+
 ```
 cd ~/web-tier   
 npm install      #The npm install command first downloads and sets up all the required dependencies. 
@@ -672,6 +676,7 @@ npm run build    #npm run build compiles the raw code into static files (HTML, C
 1. To get started, install NGINX by executing the following command:
 ```
 sudo amazon-linux-extras install nginx1 -y  # This command didnt work because of the different version OS(Amazon Linux 2023)
+```
 ```
 sudo dnf install nginx -y                 #This corrected command worked and installed NGINX on the instance.
 ```
@@ -690,7 +695,8 @@ sudo rm nginx.conf                                 #Delete/remove the default co
 sudo aws s3 cp s3://BUCKET_NAME/nginx.conf .       #Be sure to replace BUCKET_NAME with your actual bucket name.
 ```
 
-**4. Then, restart Nginx with the following command:**
+** 4. Then, restart Nginx with the following command:**
+
 ```
 sudo service nginx restart     #you must restart the NGINX service to apply the changes.
 ```
@@ -707,6 +713,7 @@ Finally, you need to set up NGINX to start automatically every time the instance
 sudo chkconfig nginx on
 ```
 <img src="vpc/web connect last" alt="web connect last" width="900"/>
+
 ---
 
 ## Result  
