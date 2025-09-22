@@ -561,3 +561,161 @@ The ASG ensures there are always at least 2 running app instances. If one fails,
   - The ASG should launch a new one automatically.
     
 >> Note: The **original app instance** (used to create the AMI) is not part of the ASG. You’ll see 3 total instances. You can delete the original later, but keeping it for troubleshooting is recommended.
+
+
+--
+
+## Part 5: Web Tier Instance Deployment  
+
+## !Imporant Error!: Connecting to the Wrong Instance  
+
+During my deployment, I initially ran into an issue where I attempted to configure NGINX and the React.js web app **inside the App Tier instance** instead of the **Web Tier instance**.  
+
+This mistake cost ~1–2 hours of troubleshooting because the workshop instructions did not clearly emphasize switching into the newly created **Web Tier EC2 instance** before executing commands.  
+
+### Why this matters  
+- Each **tier** (Web, App, Database) in a multi-tier architecture serves a specific role and must be configured independently.  
+- Running Web Tier configuration commands (NGINX setup, React build) on the App Tier will fail, since that instance is not designed to serve frontend traffic.  
+- Correctly separating responsibilities between tiers is a core AWS best practice for **security**, **scalability**, and **operational clarity**.  
+
+---
+
+The Web Tier is the internet-facing layer of the application. It is responsible for handling requests from users, serving the React website, and forwarding API calls to the Internal Load Balancer, which connects to the App Tier.  
+
+## Learning Objectives  
+- Update and upload NGINX configuration files  
+- Create the Web Tier instance in a public subnet  
+- Connect and verify instance connectivity  
+- Configure the software stack (Node.js, React, and NGINX)  
+
+---
+
+## 1. Update Config File  
+
+Before creating the Web Tier instance, we configure NGINX so that it knows how to forward API requests to the App Tier. This configures the Web Tier to act as a front door for your application, forwarding all API requests to the App Tier.
+
+Steps:  
+- Open the `nginx.conf` file from the project repository.  
+- Scroll to line 58 and replace `[INTERNAL-LOADBALANCER-DNS]` with the DNS name of your Internal Load Balancer.  
+- Upload the updated `nginx.conf` and the `web-tier/` folder to the S3 bucket created for this project.  
+<img src="vpc/line 58.png" alt="line 58" width="600"/>
+
+This step ensures that all API requests from the React app are directed through the internal load balancer instead of going directly to backend instances.  
+
+---
+
+## 2. Web Instance Deployment  
+
+The Web Tier instance is created in the same way as the App Tier instance, with a few differences:  
+
+- It must be provisioned in a **public subnet** (so it can be reached from the internet).  
+- Auto-assign a **public IP address**.  
+- Attach the security group that allows inbound HTTP traffic (port 80).  
+- Attach the IAM role that allows access to S3 (instance-role).  
+- Finally click Launch instance to create the instance. 
+<img src="vpc/web instance" alt="web instace" width="600"/>
+
+This design ensures the Web Tier is accessible to end users.  
+
+---
+
+## 3. Connect to Instance  
+
+Once the Web Tier instance is running, connect to it and switch to the `ec2-user`.  
+
+Run a simple ping command to confirm internet connectivity:
+```
+sudo -su ec2-user 
+ping 8.8.8.8
+```
+If connectivity fails, check the route table associated with the public subnet.  
+
+>> Note: During deployment, don't connect to the App Tier instance and attempt these steps there. This mistake can cause hours of confusion. Always confirm you are connected to the Web Tier instance before continuing.  
+
+---
+
+## 4. Configure Web Instance  
+
+The Web Tier needs software installed and configured to serve the React frontend application.  
+
+1. **Install Node.js with NVM**  
+   - Node.js is the JavaScript runtime used to build the React application.  
+   - NVM (Node Version Manager) makes it easier to install and manage Node.js versions.  
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.bashrc
+nvm install 16
+nvm use 16
+```
+2. **Download Web Tier Code from S3**  
+   - The necessary source code for the frontend application files are stored in S3 bucket, this command copies them to the Web Tier instance:
+```
+cd ~/
+aws s3 cp s3://BUCKET_NAME/web-tier/ web-tier --recursive
+```
+<img src="vpc/web connect1" alt="web connect1" width="800"/>
+
+3. **Build React Application**  
+   - React code must be compiled into optimized static files before serving.  
+   - Use `npm install` to install dependencies, then `npm run build` to create the production-ready files.  
+```
+cd ~/web-tier   
+npm install      #The npm install command first downloads and sets up all the required dependencies. 
+npm run build    #npm run build compiles the raw code into static files (HTML, CSS, and JavaScript).
+```
+<img src="vpc/web connect2" alt="web connect2" width="900"/>
+
+4. **Install and Configure NGINX**  
+   - NGINX is a lightweight and efficient web server.
+   - We will be using it as a web server that we will configure to serve our application on port 80. It serves the React build files to users and also proxies API requests to the Internal Load Balancer.
+     
+1. To get started, install NGINX by executing the following command:
+```
+sudo amazon-linux-extras install nginx1 -y  # This command installs the NGINX software on the instance.
+```
+
+**2. Navigate to the Nginx configuration file with the following commands and list the files in the directory:**
+```
+cd /etc/nginx        # Navigate to the NGINX configuration directory
+ls
+```
+
+**3. Next, you will configure NGINX. We need to delete the default configuration file and replace it with our own, which is stored in S3.:**
+```
+sudo rm nginx.conf                                 #Delete/remove the default configuration file.
+sudo aws s3 cp s3://BUCKET_NAME/nginx.conf .       #Be sure to replace BUCKET_NAME with your actual bucket name.
+```
+
+**4. Then, restart Nginx with the following command:**
+```
+sudo service nginx restart     #you must restart the NGINX service to apply the changes.
+```
+ 
+
+
+5. **Set Permissions and Auto-Start**  
+
+For NGINX to properly serve the React application files, you must grant it the correct permissions. This step allows NGINX to read and serve the files from the home/ec2-user directory
+```
+chmod -R 755 /home/ec2-user
+```
+
+Finally, you need to set up NGINX to start automatically every time the instance reboots.
+```
+sudo chkconfig nginx on
+```
+
+---
+
+## Result  
+Now, when you enter the public IP of your web tier instance in a browser, you should be able to see your website. If the database is connected and working correctly, you will also be able to add data.
+
+When you navigate to the public IP address of the Web Tier instance in a browser:  
+- You should see the React application being served.  
+- If the database is properly connected, you will also see that the frontend can add and display data through the backend API.  
+
+At this point, the three-tier architecture is complete:  
+
+- **Web Tier**: Public-facing, serves the frontend, and routes API calls.  
+- **App Tier**: Private layer running the Node.js API.  
+- **Database Tier**: Stores persistent data.  
