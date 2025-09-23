@@ -3,7 +3,7 @@
 ## Objective  
 To build a secure, highly available, three-tier web application architecture on AWS. 
 
-<img src="vpc/VPC diagram1.png" alt="Diagram" width="800"/>
+<img src="vpc/VPC diagram1.png" alt="Diagram" width="900"/>
 
 ---
 
