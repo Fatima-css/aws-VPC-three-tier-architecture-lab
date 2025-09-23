@@ -803,11 +803,11 @@ This ensures the Web Tier always runs at least 2 instances.
 - Open the application using the **ALB DNS name**  
 - Verify the Public IPv4 works  
 
-<img src="vpc/public ipv4 address.png" alt="Public IPv4" width="600"/>  
+<img src="vpc/public IPv4 address.png" alt="Public IPv4" width="600"/>  
 
 - Terminate one Web Tier instance → ASG should launch a replacement automatically  
 
-<img src="vpc/final.png" alt="Final High Availability Test" width="600"/>  
+<img src="vpc/final final.png" alt="Final High Availability Test" width="600"/>  
 
 ---
 
