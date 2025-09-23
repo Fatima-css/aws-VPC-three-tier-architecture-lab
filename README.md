@@ -725,4 +725,118 @@ At this point, the three-tier architecture is complete:
 
 - **Web Tier**: Public-facing, serves the frontend, and routes API calls.  
 - **App Tier**: Private layer running the Node.js API.  
-- **Database Tier**: Stores persistent data.  
+- **Database Tier**: Stores persistent data.
+
+---
+## Part 6: External Load Balancer and Auto Scaling  
+
+In this step, we make the **Web Tier highly available and fault-tolerant** by creating an AMI of our configured web server, deploying an **internet-facing Application Load Balancer (ALB),** and attaching it to an Auto Scaling Group (ASG).  
+
+---
+
+### Learning Objectives  
+- Create an AMI of our Web Tier  
+- Build a Launch Template from that AMI  
+- Deploy an external ALB to distribute user traffic  
+- Configure an Auto Scaling Group (ASG) for scaling and fault tolerance  
+
+---
+
+### 1. Create AMI of Web Tier  
+Navigate to **Instances** in the EC2 dashboard, select the Web Tier instance, and under **Actions → Image and templates → Create image.**  
+- Give the AMI a name/description.  
+- This image will be used in the Launch Template.  
+
+The AMI serves as a **blueprint** of the Web Tier with:  
+- NGINX installed  
+- React build deployed  
+- Correct configurations applied  
+
+---
+
+### 2. Create Target Group  
+Navigate to **Target Groups → Create Target Group.**  
+- Target type: **Instances**  
+- Protocol: **HTTP**  
+- Port: **80**  
+- Health Check: `/health`  
+
+This Target Group defines where the ALB sends traffic.  
+
+---
+
+### 3. Create Launch Template  
+Navigate to **Launch Templates → Create Launch Template.**  
+- AMI: **Web Tier AMI** created earlier  
+- Instance type: `t2.micro`  
+- Security Group: **Web Tier SG** (HTTP access)  
+- IAM Role: the same instance profile used previously  
+
+---
+
+### 4. Deploy External Load Balancer  
+Navigate to **Load Balancers → Create Load Balancer → Application Load Balancer.**  
+- Name: `web-tier-external-lb`  
+- Scheme: **Internet-facing**  
+- Network: Select the correct VPC and **public subnets**  
+- Security Group: **Web Tier SG**  
+- Listener: HTTP (port 80) -> Forward to the **Web Tier Target Group**  
+
+<img src="vpc/web sg.png" alt="Web Tier Security Group" width="600"/>  
+<img src="vpc/web lb.png" alt="Web Load Balancer" width="600"/>  
+
+---
+
+### 5. Create Auto Scaling Group  
+Navigate to **Auto Scaling Groups → Create Auto Scaling Group.**  
+- Select the **Launch Template**  
+- VPC: Same as Web Tier  
+- Subnets: **Public Web Subnets**  
+- Attach to the **Web Tier Target Group**  
+- Desired/Min/Max capacity: `2`  
+
+This ensures the Web Tier always runs at least 2 instances.  
+
+---
+
+### 6. Test High Availability  
+- Open the application using the **ALB DNS name**  
+- Verify the Public IPv4 works  
+
+<img src="vpc/public ipv4 address.png" alt="Public IPv4" width="600"/>  
+
+- Terminate one Web Tier instance → ASG should launch a replacement automatically  
+
+<img src="vpc/final.png" alt="Final High Availability Test" width="600"/>  
+
+---
+
+### ✅ Why This Matters  
+
+Before this step, the Web Tier ran on a **single EC2 instance**. That worked for testing but had two problems:  
+
+1. **Single Point of Failure** - If that one instance crashed, the whole website would go offline.
+2. **Limited Capacity** - A single small instance (t2.micro) can only handle a small number of users before performance drops. By adding **Auto Scaling + Load Balancing**, we solved those problems: 
+
+By adding **Auto Scaling + Load Balancing**, we solved those problems:  
+- **High Availability** – traffic is routed to healthy instances.  
+- **Scalability** – ASG can add/remove instances as needed.  
+- **Reliability** – users always connect to a working instance.  
+- **Production-Grade Setup** – mirrors real-world AWS architectures.
+
+---
+
+## Cleanup
+
+Following the successful deployment and testing, all AWS resources were properly terminated to avoid unnecessary costs.
+
+It's important to be aware of the resources that can quickly rack up charges, even when not in use. These include:
+
+- **RDS Database Instances:** Databases incur costs for storage and compute time.
+
+- **NAT Gateways:** These have an hourly cost and a data processing fee.
+
+- **EC2 Instances:** Even when idle, instances will continue to charge you for their uptime.
+
+By following the workshop's instructions to properly delete all resources, we ensured there were no lingering costs.
+
