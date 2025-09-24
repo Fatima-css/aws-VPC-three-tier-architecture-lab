@@ -1,4 +1,4 @@
-# aws-VPC-three-tier-architecture-lab
+# AWS Three-Tier VPC Architecture Project
 
 ## Objective  
 To build a secure, highly available, three-tier web application architecture on AWS. 
