@@ -5,7 +5,11 @@ To build a secure, highly available, three-tier web application architecture on 
 
 <img src="vpc/VPC diagram1.png" alt="Diagram" width="900"/>
 
-**This architecture is designed to be scalable and highly available. A public-facing Application Load Balancer (ALB) routes all incoming client traffic to the web tier. The web tier, powered by Nginx web servers, serves the static React.js frontend and forwards API calls to the internal load balancer. This internal load balancer then distributes the API traffic to the application tier, which runs Node.js and manages all data interactions with a highly-available Aurora MySQL database. Auto Scaling Groups and health checks are used across all layers to maintain reliability.**
+### Architecture Overview
+
+This architecture is designed to be scalable and highly available. A public-facing Application Load Balancer (ALB) routes all incoming client traffic to the web tier. The web tier, powered by Nginx web servers, serves the static React.js frontend and forwards API calls to the internal load balancer. This internal load balancer then distributes the API traffic to the application tier, which runs Node.js and manages all data interactions with a highly-available Aurora MySQL database. Auto Scaling Groups and health checks are used across all layers to maintain reliability.
+
+
 
 ---
 
